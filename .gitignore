@@ -1,0 +1,6 @@
+*.csv
+*.xlsx
+*.py~
+.gitignore~
+.~lock*
+*.csv.gz
