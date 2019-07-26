@@ -16,10 +16,13 @@ class Joiner:
         self.preProcWeather()
         self.yearlyJoinDict = {}
         for yearInt in range(2014,2017):
+            # for each year in range, create a joined data table with weather
+            # and crop performance data
             self.yearly(yearInt)
 
     def preProcWeather(self):
         self.dailyWeather = pandas.read_csv('daily_weather2013to2016.csv')
+        # modify adm2_code column for join-ability
         self.dailyWeather['FIPScounty'] = \
                 self.dailyWeather['adm2_code'].str.replace('US','').astype(str)
         self.dailyWeather['earlYr'] = numpy.where(self.dailyWeather.doy < \
@@ -61,7 +64,7 @@ class Joiner:
         _holderGrouped = _holderGrouped.merge(_meanMinRHbyCounty,left_index =\
                             True,right_index=True,how='outer')
 
-        # Merge back into self.dailyWeather
+        # Merge back into self.dailyWeather (with a reset_index'd holder)
         self.dailyWeather =self.dailyWeather.merge(_holderGrouped.reset_index()\
                                                    ,how='outer',on='FIPScounty')
 
@@ -104,6 +107,7 @@ class Joiner:
             sys.exit()
         self.yearlyJoinDict[yearStr].to_csv('FullJoin'+str(yearStr)+'.csv',\
                         index=False)
+        
         newColList = ['year', 'area', 'zip_code', 'moisture', 'kernel_weight',\
                       'actual_wheat_ash', 'falling_no', 'protein_12', 'ZIP',\
                       'COUNTY', 'FIPScounty', 'aggRain','meanAvgT', 'aggGDD',\
