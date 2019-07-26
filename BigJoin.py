@@ -115,7 +115,7 @@ class Joiner:
         # create DF containing only yearly summary data for each county
         self.yearlyJoinDict[yearStr][newColList].drop_duplicates().to_csv(\
         'YearlySummary'+str(yearStr)+'.csv',index=False)
-        
+
 
 if __name__ == '__main__':
     Joiner()
