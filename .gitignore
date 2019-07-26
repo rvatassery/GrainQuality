@@ -1,4 +1,5 @@
-*.csv
+daily*.csv
+*Survey*csv
 *.xlsx
 *.py~
 .gitignore~
