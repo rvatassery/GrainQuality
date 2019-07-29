@@ -47,6 +47,9 @@ class Joiner:
         _meanMinRHbyCounty = self.dailyWeather[self.dailyWeather.earlYr==True]\
                     [['FIPScounty','met_min_rh']].groupby(['FIPScounty']).mean()
         _meanMinRHbyCounty.columns = ['meanMinRH']
+        _meanSRWM2byCounty = self.dailyWeather[self.dailyWeather.earlYr==True]\
+                    [['FIPScounty','met_sr_wm2']].groupby(['FIPScounty']).mean()
+        _meanSRWM2byCounty.columns = ['meanSRWM2']
 
         '''
         Join all grouped quantities created above into a single DF
@@ -62,6 +65,8 @@ class Joiner:
         _holderGrouped = _holderGrouped.merge(_meanMaxRHbyCounty,left_index =\
                             True,right_index=True,how='outer')
         _holderGrouped = _holderGrouped.merge(_meanMinRHbyCounty,left_index =\
+                            True,right_index=True,how='outer')
+        _holderGrouped = _holderGrouped.merge(_meanSRWM2byCounty,left_index =\
                             True,right_index=True,how='outer')
 
         # Merge back into self.dailyWeather (with a reset_index'd holder)
@@ -111,7 +116,7 @@ class Joiner:
         newColList = ['year', 'area', 'zip_code', 'moisture', 'kernel_weight',\
                       'actual_wheat_ash', 'falling_no', 'protein_12', 'ZIP',\
                       'COUNTY', 'FIPScounty', 'aggRain','meanAvgT', 'aggGDD',\
-                      'meanMaxVPD', 'meanMaxRH', 'meanMinRH']
+                      'meanMaxVPD', 'meanMaxRH', 'meanMinRH', 'meanSRWM2']
         # create DF containing only yearly summary data for each county
         self.yearlyJoinDict[yearStr][newColList].drop_duplicates().to_csv(\
         'YearlySummary'+str(yearStr)+'.csv',index=False)
