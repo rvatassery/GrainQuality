@@ -64,6 +64,8 @@ def agrFileCreate(holderFile,IC,DC):
             line = line.replace('titletoreplace_XXX',DC+' vs '+IC)
         elif 'label "xaxislabel' in line:
             line = line.replace('xaxislabel_XXX',IC)
+        elif 'label "yaxislabel' in line:
+            line = line.replace('yaxislabel_XXX',DC)
         elif 'major xaxisTick_XXX' in line:
             line = line.replace('xaxisTick_XXX',str(xRange/5))
         elif 'major yaxisTick_XXX' in line:
