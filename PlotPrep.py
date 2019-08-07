@@ -12,6 +12,7 @@ def plotPrep():
     # glob summary files
     fileList = glob.glob('YearlySummary*csv')
     holderFile = pandas.DataFrame()
+    # append all YearlySummary files
     for fileIn in fileList:
         readFile = pandas.read_csv(fileIn)
         print(fileIn)
@@ -21,6 +22,10 @@ def plotPrep():
 
 def newFileCreate(holderFile):
 
+    '''
+    preprocessing the weather data, then creating plots for each combination
+    of independent/dependent variable
+    '''
     rainRange = abs(holderFile.aggRain.max()-holderFile.aggRain.min())
     tRange = abs(holderFile.meanAvgT.max()-holderFile.meanAvgT.min())
     holderFile['normRainT'] = (holderFile.aggRain - holderFile.aggRain.min())\
@@ -39,6 +44,12 @@ def newFileCreate(holderFile):
 
 def agrFileCreate(holderFile,IC,DC):
 
+    '''
+    Create plot files in xmgrace format (.agr)
+    This is a simple format plotting file, details here:
+    http://plasma-gate.weizmann.ac.il/Grace/
+    '''
+    
     xRange = abs(holderFile[IC].max() - holderFile[IC].min())
     yRange = abs(holderFile[DC].max() - holderFile[DC].min())
 
